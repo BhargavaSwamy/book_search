@@ -1,0 +1,38 @@
+<.form let={f} for={@changeset} action={@action}>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= label f, :title %>
+  <%= text_input f, :title %>
+  <%= error_tag f, :title %>
+
+  <%= label f, :author_id %>
+  <%= select f, :author_id, Enum.map(@authors, fn author -> {author.name, author.id} end), prompt: "Select an author" %>
+  <%= error_tag f, :author_id %>
+
+  <%= label f, :tags %>
+alias BookSearchWeb.TagView
+  <%= multiple_select f, :tags, BookSearchWeb.TagView.tag_options(), selected: [] %>
+  <%= error_tag f, :tags %>
+
+    <!--
+    Generate form inputs for the "book_content" field of the form represented by "f".
+    The form helper function "inputs_for" will pass a `Phoenix.HTML.Form` struct bound to `book_content_form` as an argument to the form helpers.
+  -->
+  <%= inputs_for f, :book_content, fn book_content_form -> %>
+    <!-- Generate a label for the "full_text" field of the nested "book_content" field -->
+    <%= label book_content_form, :full_text %>
+    <!-- Generate a text input for the "full_text" field of the nested "book_content" field -->
+    <%= text_input book_content_form, :full_text %>
+    <!-- Generate an error tag for the "full_text" field of the nested "book_content" field -->
+    <%= error_tag book_content_form, :full_text %>
+  <!-- Close the block passed to "inputs_for" -->
+  <% end %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+</.form>

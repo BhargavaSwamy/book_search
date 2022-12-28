@@ -1,0 +1,37 @@
+<h1>Show Book</h1>
+
+<ul>
+  <li>
+    <strong>Author:</strong>
+    <%= if @book.author, do: @book.author.name %>
+  </li>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @book.title %>
+  </li>
+
+  <li>
+    <strong>Tags:</strong>
+    <ul>
+      <%= for tag <- @book.tags do %>
+        <li><%= link tag.name, to: Routes.tag_path(@conn, :show, tag) %></li>
+      <% end %>
+    </ul>
+  </li>
+
+
+  <!-- If the @book object has a "book_content" field, render the following HTML -->
+  <%= if @book.book_content do %>
+    <li>
+      <strong>Full Text:</strong>
+      <!-- Render the "full_text" field of the "book_content" map -->
+      <%= @book.book_content.full_text %>
+    </li>
+  <!-- Close the if statement -->
+  <% end %>
+</ul>
+
+
+<span><%= link "Edit", to: Routes.book_path(@conn, :edit, @book) %></span> |
+<span><%= link "Back", to: Routes.book_path(@conn, :index) %></span>
