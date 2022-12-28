@@ -25,3 +25,4 @@ jobs:
           elixir-version: '1.14.0'
       - run: mix deps.get
       - run: mix test
+
